@@ -1,9 +1,7 @@
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        LinearEquation linearEquation = new LinearEquation(new Scanner(System.in));
-        linearEquation.Init();
+        LinearEquationLogic linearEquationLogic = new LinearEquationLogic();
+        linearEquationLogic.start();
     }
 
     public static void clearLine() {
