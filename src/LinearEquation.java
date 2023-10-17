@@ -58,20 +58,7 @@ public class LinearEquation {
             return "y = " + getYIntercept();
         }
 
-        String slope = (y2 - y1) + "/" + (x2 - x1) + "x";
-        if (y2 - y1 < 0 && x2 - x1 < 0) {
-            slope = (Math.abs(y2 - y1)) + "/" + (Math.abs(x2 - x1)) + "x";
-        } else if (x2 - x1 < 0) {
-            slope = "-" + (y2 - y1) + "/" + (Math.abs(x2 - x1)) + "x";
-        }
-        if (getSlope() % 1 == 0) {
-            slope = String.valueOf((int) getSlope()) + "x";
-        }
-        if (getSlope() == 1) {
-            slope = "x";
-        } else if (getSlope() == -1) {
-            slope = "-x";
-        }
+        String slope = getSlopeString();
 
         String yIntercept = " + " + getYIntercept();
         if (getYIntercept() == 0) {
@@ -81,6 +68,40 @@ public class LinearEquation {
         }
 
         return "y = " + slope + yIntercept;
+    }
+
+    private String getSlopeString() {
+        int deltaX = x2 - x1;
+        int deltaY = y2 - y1;
+        int gcd = gcd(deltaX, deltaY);
+        deltaX /= gcd;
+        deltaY /= gcd;
+
+        String slope = deltaY + "/" + deltaX + "x";
+        if (deltaY < 0 && deltaX < 0) {
+            slope = (Math.abs(deltaY)) + "/" + (Math.abs(deltaX)) + "x";
+        } else if (deltaX < 0) {
+            slope = "-" + deltaY + "/" + (Math.abs(deltaX)) + "x";
+        }
+        if (getSlope() % 1 == 0) {
+            slope = (int) getSlope() + "x";
+        }
+        if (getSlope() == 1) {
+            slope = "x";
+        } else if (getSlope() == -1) {
+            slope = "-x";
+        }
+        return slope;
+    }
+
+
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
     }
 
 
