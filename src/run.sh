@@ -18,3 +18,5 @@ for file in *.java; do
         fi
     fi
 done
+
+java Main.java
