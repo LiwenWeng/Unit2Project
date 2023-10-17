@@ -51,13 +51,58 @@ public class LinearEquation {
     }
 
     public String getSlopeInterceptForm() {
-        String slope = ((getSlope() % 1) == 0) ? Integer.toString((int) getSlope()) : String.format("%1$d/%2$d", y2-y1, x2-x1);
-        return String.format("y = %sx + %.2f", slope, getYIntercept());
+        if (x1 == x2) {
+            return "x = " + x1;
+        }
+        if (y1 == y2) {
+            return "y = " + getYIntercept();
+        }
+
+        String slope = (y2 - y1) + "/" + (x2 - x1) + "x";
+        if (y2 - y1 < 0 && x2 - x1 < 0) {
+            slope = (Math.abs(y2 - y1)) + "/" + (Math.abs(x2 - x1)) + "x";
+        } else if (x2 - x1 < 0) {
+            slope = "-" + (y2 - y1) + "/" + (Math.abs(x2 - x1)) + "x";
+        }
+        if (getSlope() % 1 == 0) {
+            slope = String.valueOf((int) getSlope()) + "x";
+        }
+        if (getSlope() == 1) {
+            slope = "x";
+        } else if (getSlope() == -1) {
+            slope = "-x";
+        }
+
+        String yIntercept = " + " + getYIntercept();
+        if (getYIntercept() == 0) {
+            yIntercept = "";
+        } else if (getYIntercept() < 0) {
+            yIntercept = " - " + Math.abs(getYIntercept());
+        }
+
+        return "y = " + slope + yIntercept;
     }
 
 
     public double getDistanceBetweenPoints() {
         return roundToHundredth(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
+    }
+
+
+    public int getX1() {
+        return x1;
+    }
+
+    public int getY1() {
+        return y1;
+    }
+
+    public int getX2() {
+        return x2;
+    }
+
+    public int getY2() {
+        return y2;
     }
 
     private double roundToHundredth(double value) {

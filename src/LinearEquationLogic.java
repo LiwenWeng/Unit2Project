@@ -13,10 +13,9 @@ public class LinearEquationLogic {
     public void start() {
         String again = "";
         while (!again.equals("n")) {
+            again = "";
             getCoords();
             displayInfo();
-            getYValueWithX();
-            System.out.println();
             while (!again.equals("y")) {
                 Main.clearLine();
                 System.out.print("Would you like to enter another pair of coordinates? (y/n): ");
@@ -52,17 +51,26 @@ public class LinearEquationLogic {
 
     private void displayInfo() {
         System.out.println();
-        System.out.println("First pair: " + linearEquation.getFirstPair());
-        System.out.println("Second pair: " + linearEquation.getSecondPair());
-        System.out.println("Slope of line: " + linearEquation.getSlope());
-        System.out.println("Y-intercept: " + linearEquation.getYIntercept());
-        System.out.println("Slope intercept form: " + linearEquation.getSlopeInterceptForm());
-        System.out.println("Distance between points: " + linearEquation.getDistanceBetweenPoints());
+        if (linearEquation.getX1() == linearEquation.getX2()) {
+            System.out.println("The points are on a vertical line: " + linearEquation.getSlopeInterceptForm());
+            System.out.println();
+        } else if (linearEquation.getY1() == linearEquation.getY2()) {
+            System.out.println("The points are on a horizontal line: " + linearEquation.getSlopeInterceptForm());
+            getYValueWithX();
+        } else {
+            System.out.println("The two points are: " + linearEquation.getFirstPair() + " and " + linearEquation.getSecondPair());
+            System.out.println("Slope of line: " + linearEquation.getSlope());
+            System.out.println("Y-intercept: " + linearEquation.getYIntercept());
+            System.out.println("Slope intercept form: " + linearEquation.getSlopeInterceptForm());
+            System.out.println("Distance between points: " + linearEquation.getDistanceBetweenPoints());
+            getYValueWithX();
+        }
         System.out.println();
     }
 
 
     private void getYValueWithX() {
+        System.out.println();
         double x;
         boolean validInput = false;
         while (!validInput) {
@@ -77,5 +85,6 @@ public class LinearEquationLogic {
                 scanner.nextLine();
             }
         }
+        System.out.println();
     }
 }
