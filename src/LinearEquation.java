@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class LinearEquation {
     private int x1;
     private int y1;
@@ -7,23 +5,16 @@ public class LinearEquation {
     private int y2;
     private String coord1;
     private String coord2;
-    private Scanner scanner;
 
 
-    public LinearEquation() {
-        scanner = new Scanner(System.in);
-        setValues();
+    public LinearEquation(String coord1, String coord2) {
+        this.coord1 = coord1;
+        this.coord2 = coord2;
+        setXY();
     }
 
 
-    private void setValues() {
-        Main.clearScreen();
-        System.out.println("Enter your coordinate point in this format: (a, b)");
-        String coord1 = repeatUntilCoord("Enter your first Coordinate Point: ", "", true);
-        String coord2 = repeatUntilCoord("Enter your second Coordinate Point: ", "", true);
-        this.coord1 = coord1;
-        this.coord2 = coord2;
-
+    private void setXY() {
         // Remove whitespaces
         coord1 = coord1.replaceAll("\\s", "");
         coord2 = coord2.replaceAll("\\s", "");
@@ -37,17 +28,6 @@ public class LinearEquation {
         y2 = Integer.parseInt(extracted2[1]);
     }
 
-    private String repeatUntilCoord(String message, String coord, boolean initial) {
-        while (!coord.matches("\\(\\d+,[ ]]?\\d+\\)")) {
-            if (!initial) {
-                Main.clearLine();
-            }
-            initial = false;
-            System.out.print(message);
-            coord = scanner.nextLine();
-        }
-        return coord;
-    }
 
     public String getFirstPair() {
         return coord1.replaceAll("\\s", "");
@@ -63,11 +43,11 @@ public class LinearEquation {
     }
 
     public double getSlope() {
-        return Math.round((double) (y2 - y1) / (x2 - x1) * 100.0) / 100.0;
+        return roundToHundredth((double) (y2 - y1) / (x2 - x1));
     }
 
     public double getYIntercept() {
-        return Math.round((y1 - (getSlope() * x1)) * 100.0) / 100.0;
+        return roundToHundredth(y1 - (getSlope() * x1));
     }
 
     public String getSlopeInterceptForm() {
@@ -75,7 +55,12 @@ public class LinearEquation {
         return String.format("y = %sx + %.2f", slope, getYIntercept());
     }
 
+
     public double getDistanceBetweenPoints() {
-        return Math.round(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) * 100.0) / 100.0;
+        return roundToHundredth(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
+    }
+
+    private double roundToHundredth(double value) {
+        return Math.round(value * 100.0) / 100.0;
     }
 }
